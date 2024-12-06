@@ -164,6 +164,7 @@ public function update(Request $request, Employee $employee)
             'birthdate' => 'required|date',
             'sex' => 'required|string',
             'civil_status' => 'required|string',
+            'classification' => 'required|string',
             'nationality' => 'required|string',
             'address' => 'required|string',
             'phone' => 'required|string',
@@ -179,7 +180,6 @@ public function update(Request $request, Employee $employee)
             'termination_reason' => 'nullable|string',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
         // Photo validation
         if ($request->hasFile('photo')) {
             $validated['photo_url'] = $request->file('photo')->store('employee_photos', 'public');
