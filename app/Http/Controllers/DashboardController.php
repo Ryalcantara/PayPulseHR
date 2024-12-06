@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FundCluster;
-use App\Models\voucher;
+use App\Models\Voucher;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -36,7 +36,15 @@ public function index()
         'May' => 0,
         'June' => 0,
         'July' => 0,
+        'August' => 0,
+        'September' => 0,
+        'October' => 0,
+        'November' => 0,
+        'December' => 0,
     ];
+
+    // Initialize a variable to hold the total amount
+    $totalAmount = 0;
 
     // Loop through vouchers and sum up the amount by month
     foreach ($vouchers as $voucher) {
@@ -47,6 +55,9 @@ public function index()
         if (array_key_exists($month, $monthlyExpenses)) {
             $monthlyExpenses[$month] += $voucher->amount;
         }
+
+        // Add the voucher's amount to the total amount
+        $totalAmount += $voucher->amount;
     }
 
     // Prepare the data for the chart (labels and expenses data)
@@ -58,12 +69,12 @@ public function index()
     // Retrieve fund clusters
     $fundClusters = FundCluster::all();
 
-    // Pass the data to the view
+    // Pass the data to the view, including the total amount
     return Inertia::render('Dashboard/Dashboard', [
         'chartData' => $chartData,
         'fundClusters' => $fundClusters,
+        'totalAmount' => $totalAmount, // Pass the total amount to the view
     ]);
 }
-
 
 }

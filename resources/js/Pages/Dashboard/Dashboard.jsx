@@ -23,8 +23,8 @@ const ChartComponent = ({ chartData }) => {
             {
                 label: 'Expenses',
                 data: chartData.data,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: '#741D20',
+                borderColor: '#5F1415',
                 borderWidth: 1,
             },
         ],
@@ -38,7 +38,12 @@ const ChartComponent = ({ chartData }) => {
         },
     };
 
-    return <Bar data={data} options={options} />;
+    return (
+        // <div style={{ width: '100%', height: '500px' }}>
+        <div className="h-[500px] w-full">
+            <Bar data={data} options={options} />
+        </div>
+    );
 };
 
 ChartComponent.propTypes = {
@@ -79,7 +84,7 @@ FundCluster.propTypes = {
     fundClusters: PropTypes.array,
 };
 
-const Dashboard = ({ auth }) => {
+const Dashboard = ({ auth, totalAmount }) => {
     const { chartData, fundClusters } = usePage().props;
 
     return (
@@ -92,6 +97,11 @@ const Dashboard = ({ auth }) => {
                     <div className="w-full rounded-md border p-2">
                         <ChartComponent chartData={chartData} />
                     </div>
+                    {/* <div className="mt-5">
+                        <h3 className="text-xl font-bold">
+                            Total Expenses: ₱{totalAmount.toLocaleString()}
+                        </h3>
+                    </div> */}
                 </div>
             </div>
         </AuthenticatedLayout>
