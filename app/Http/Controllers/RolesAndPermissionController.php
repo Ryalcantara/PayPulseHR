@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\User;
-use Spatie\Permission\Models\Permission;
+// use Spatie\Permission\Models\Permission;
 use Inertia\Inertia;
 
 class RolesAndPermissionController extends Controller
@@ -19,7 +19,7 @@ class RolesAndPermissionController extends Controller
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            // Permission::create(['name' => $permission]);
         }
 
         return response()->json(['message' => 'Permissions added successfully']);
@@ -27,7 +27,7 @@ class RolesAndPermissionController extends Controller
     public function index()
     {
         $users = User::select('name', 'id')->with('employee')->get();
-        $permissions = Permission::all();
+        // $permissions = Permission::all();
 
         return inertia('Admin/RolesAndPermission', compact('employees',  'permissions', 'users'));
     }

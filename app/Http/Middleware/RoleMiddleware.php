@@ -9,17 +9,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RoleMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle($request, Closure $next, $role)
     {
-        $user = Auth::user();
+        $roles = is_array($role) ? $role : explode('|', $role);
 
-        if (!$user || !$user->employee || $user->employee->role !== $role) {
-            abort(403, 'Unauthorized.');
+        if (!$request->user() || !$request->user()->hasAnyRole($roles)) {
+            abort(403, 'User does not have the right roles.');
+            // Or redirect:
+            return redirect()->route('/')->with('error', 'Unauthorized access');
         }
 
         return $next($request);
